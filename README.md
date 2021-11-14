@@ -18,9 +18,9 @@ Veebilehel on registreerimis vorm ning sisselogimise vorm. Registreerimata ja si
 - Admin saab lisada krüptorahasid esilehele juurde.
 
 ## Wireframe
-- [Main page](![](https://i.imgur.com/7c2MDb0.png))
-- [Login](![](https://i.imgur.com/gYhAFWO.png))
-- [Register](![](https://i.imgur.com/giCiuq1.png))
-- [Portfolio](![](https://i.imgur.com/RRiwYk1.png))
+- [Main page](https://i.imgur.com/7c2MDb0.png)
+- [Login](https://i.imgur.com/gYhAFWO.png)
+- [Register](https://i.imgur.com/giCiuq1.png)
+- [Portfolio](https://i.imgur.com/RRiwYk1.png)
 - [Admin page](https://i.imgur.com/syjW4eu.png)
 
