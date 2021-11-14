@@ -9,5 +9,5 @@ Veebilehel on registreerimis vorm ning sisselogimise vorm. Registreerimata ja si
 
 
 
-
+.. image:: https://img.shields.io/bitbucket/issues/AnPet11/virtuaalraha   :alt: Bitbucket open issues
 
