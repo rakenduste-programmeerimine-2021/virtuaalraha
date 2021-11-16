@@ -4,12 +4,19 @@
   
 
 - Dependencyte installeerimine
-`docker-compose run --rm --no-deps backend-node install`
-`docker-compose run --rm --no-deps frontend install`
+
+```
+docker-compose run --rm --no-deps backend-node install
+docker-compose run --rm --no-deps frontend install
+
+```
+
 - Dockeri käivitamiseks
+
 `docker-compose up -d`
 
 Frontend  - [http://localhost:3000/](http://localhost:3000/)
+
 Backend - [http://localhost:8081/](http://localhost:8081/)
 
 ## Troubleshoot
