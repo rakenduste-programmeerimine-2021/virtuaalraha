@@ -1,11 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
-
+const jwtAuth = require("./middleware/jwtAuth")
+require("dotenv").config()
 
 const coinRoutes = require('./routes/coin');
 const portfolioRoutes = require('./routes/portfolio')
-
+const authRoutes = require('./routes/auth');
 
 const app = express()
 app.use(function(req, res, next) {
@@ -19,15 +20,22 @@ app.use(express.json());
 
 app.use('/api/coin', coinRoutes);
 app.use('/api/portfolio', portfolioRoutes);
-
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/secret', jwtAuth, (req, res) => {
+  res.send('Secret Hello World!')
+})
+
 app.get('*', (req, res) => {
   res.send('This route does not exist')
 })
+
+
+ 
 
 
 mongoose
