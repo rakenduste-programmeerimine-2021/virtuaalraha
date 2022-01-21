@@ -6,16 +6,27 @@ exports.getPortfolio = async (req, res) => {
     res.status(200).send(portfolio)
 }
 
+exports.getUserPortfolio = async (req, res) => {
+
+    console.debug(req.user)
+    const { userId } = req.user.id
+    console.debug(req.user.id)
+
+    const portfolios = await Portfolio.find({ coinOwnerId: req.user.id})
+
+    res.status(200).send(portfolios)
+
+}
+
 exports.createPortfolio = async (req, res) => {
-    const { coinOwnerId, coinId, coinAmount, coinCurrentValue } = req.body
+    const { coinOwnerId, coinName, coinAmount } = req.body
 
     const newPortfolio = {
         coinOwnerId,
-        coinId,
-        coinAmount,
-        coinCurrentValue
-
+        coinName,
+        coinAmount
     }
+
     const createdPortfolio = new Portfolio(newPortfolio)
 
     const savedPortfolio = await createdPortfolio.save()
@@ -24,9 +35,9 @@ exports.createPortfolio = async (req, res) => {
 }
 
 exports.deletePortfolio = async (req, res) => {
-    const { id } = req.params;
+    const { ownerId, name  } = req.body;
 
-    const portfolio = await Portfolio.findOneAndDelete({ _id: id })
+    const portfolio = await Portfolio.findOneAndDelete({ coinOwnerId: ownerId, coinName: name  })
 
     if (!portfolio) res.status(404).send("No portfolio with that id found")
 
