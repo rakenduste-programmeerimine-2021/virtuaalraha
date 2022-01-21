@@ -1,101 +1,107 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import './Components.css';
-import {useState} from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
-function RegisterForm(){
+function RegisterForm() {
+  const [firstName, setFirstName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-    const {userName, setUserName} = useState('')
-    const {password, setPassword} = useState('')
-    const {email, setEmail} = useState('')
-    const handleSubmit = (value)=>{
-        value.preventDefault()
+  const handleSubmit = async (value) => {
+    setErrorMsg("");
 
-        const user ={
-            userName: userName,
-            password: password,
-            email: email
-        }
+    value.preventDefault();
 
-        try{
-                fetch("http://localhost:8081/api/auth/signup", {
-                    method: "POST",
-                    body: JSON.stringify({
-                    title: "Title of post",
-                    body: "Post Body"
-                    })
-                })
-                    .then(res => {
-                    if (!response.ok) throw Error(response.statusText);
-                    return response.json();
-                    })
-                    .then(data => console.log(data, "Regiter on tehtud"))
-                    .catch(error => console.log(error));
-        }
+    const user = {
+      firstName: firstName,
+      password: password,
+      email: email,
+    };
+    console.log(user);
 
+    try {
+      axios
+        .post("http://localhost:8081/api/auth/signup", user)
+        .then((res) => {
+          console.log(res.data);
+          if (res) {
+            console.log("User registered successfully!");
+          } 
+        })
+        .catch((error) => {
+          console.log(error);
+          setErrorMsg(error);
+        });
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-
-    return(
-        <body>
-        <div className="OuterContainer">
-
-            <form className="InnerContainer" onSubmit={handleSubmit}>
-            <div className="TitleBackround">
-                <h1 className="Titel">Register</h1>
-            </div>
-
-            <div className="Input">
-                <input
-                    type="Text"
-                    placeholder="Username"
-                    onChange={(e) => setUserName(e.target.value)}
-                    required
-                ></input>
-            </div>
-
-            <div className="Input">
-                <input
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                ></input>
-            </div>
-
-            <div className="Input">
-                <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    required
-                    minLength="6"
-                ></input>
-            </div>
-
-            <div className="Input">
-                <input
-                    type="email"
-                    placeholder="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    email
-                ></input>
-            </div>
-            
-            <div className="Register">
-                <button classname="Register"> Registreeri 🤷‍♀️</button>
-            </div>
-
-            <div className="ToLogin">
-                <Link to="./login">
-                    <button classname="ToLogin"> Logi sisse </button> 
-                </Link>
-            </div>
-
-            </form>
+  return (
+    <div >
+      <form onSubmit={handleSubmit}>
+        <div >
+          <p >Registration</p>
+          {<span style={{ color: "red" }}>{errorMsg}</span>}
         </div>
-        </body>
-        
-    )
+
+        <div style = {{marginBottom: "10px"}}>
+          <label style={{marginRight: "10px"}}>First name</label>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Example"
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </div>
+        <div style = {{marginBottom: "10px"}}>
+          <label style={{marginRight: "40px"}}>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="example@example.com"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            email
+          />
+        </div>
+        <div style = {{marginBottom: "10px"}}>
+          <label style={{marginRight: "16px"}}>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            minLength="6"
+            required
+          />
+        </div>
+        <div style = {{marginBottom: "10px"}}>
+          <label>Confirm password</label>
+          <input
+            type="password"
+            name="confirmpassword"
+            placeholder="Confirm password"
+            required
+          />
+        </div>
+        <div style = {{marginBottom: "10px"}}>
+          <div style={{marginLeft: "30px"}}>
+            <Link to="/login">
+              <button style={{marginLeft: "10px"}}>Back</button>
+            </Link>
+            <input
+              type="submit"
+              value="Register"
+              style={{marginLeft: "20px"}}
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default RegisterForm
+export default RegisterForm;

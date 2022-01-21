@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
 const jwtAuth = require("./middleware/jwtAuth")
+const cors = require('cors');
 require("dotenv").config()
 
 const coinRoutes = require('./routes/coin');
@@ -18,6 +19,8 @@ app.use(function(req, res, next) {
 });
 app.use(express.json());
 
+console.debug('entrypoint')
+app.use(cors());
 app.use('/api/coin', coinRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/auth', authRoutes);
@@ -33,10 +36,6 @@ app.get('/secret', jwtAuth, (req, res) => {
 app.get('*', (req, res) => {
   res.send('This route does not exist')
 })
-
-
- 
-
 
 mongoose
   .connect(process.env.MONGODB_URI, {

@@ -16,10 +16,13 @@ exports.login = async (req, res) => {
     const userTemplate = {
       id: user.id,
       firstName: user.firstName,
+      role: user.role,
       email
     }
 
-    const token = jwt.sign(userTemplate, process.env.JWT_SECRET)
+    console.debug(userTemplate);
+    console.debug(process.env.JWT_SECRET);
+    const token = jwt.sign(userTemplate, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
     if (!token) throw Error("Something critical happened 99981811")
 
     res.status(200).json({
